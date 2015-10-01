@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- <interceptors> <interceptor name="role" class="servlet.Status_role"></interceptor> 
+			<interceptor name="status" class="servlet.Status_log"></interceptor> <interceptor-stack 
+			name="mystack"> <interceptor-ref name="defaultStack"></interceptor-ref> <interceptor-ref 
+			name="role"> <param name="excludeMethods">Users_login,Users_logout</param> 
+			</interceptor-ref> </interceptor-stack> </interceptors> <default-interceptor-ref 
+			name="mystack"></default-interceptor-ref> <global-results> <result name="">/admin/login.jsp</result> 
+			</global-results> -->
+	</package>
+
+	<!-- Add packages here -->
+	<package name="users" namespace="/admin" extends="default">
+		<action name="authorityIn" class="action.UsersAction" method="login">
+			<result name="login_success" type="redirect">/admin/index.jsp</result>
+			<result name="login_failure" type="redirect">/admin/login.jsp</result>
+			<result name="input">/admin/login.jsp</result>
+		</action>
+		<action name="authorityOut" class="action.UsersAction" method="logout">
+			<result name="logout_success" type="redirect">/admin/login.jsp</result>
+		</action>
+		<action name="upload" class="action.FileUploadAction" method="mypic">
+			<result name="upload_success" type="redirect">/admin/myprofile.jsp</result>
+
+			<!-- 配置拦截器限制上床文件类型及大小 -->
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/jpeg</param>
+				<param name="maximumSize">1M</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+	</package>
+
+
+</struts>
