@@ -47,7 +47,7 @@
 						</a></li>
 					</s:if>
 				</ul></li>
-			<s:if test="%{#myinfo.role == '！admin'}">
+			<s:if test="%{#myinfo.role == 'admin'}">
 				<li><a href="customer_mgt.html"> <i class="icon-table"></i>
 						客户管理
 				</a></li>

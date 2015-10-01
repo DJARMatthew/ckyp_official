@@ -4,6 +4,8 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+	<constant name="struts.custom.i18n.resources" value="app"></constant>
+	<constant name="struts.multipart.maxSize" value="10485760"></constant>
 	<package name="default" namespace="/" extends="struts-default">
 		<!-- <interceptors> <interceptor name="role" class="servlet.Status_role"></interceptor> 
 			<interceptor name="status" class="servlet.Status_log"></interceptor> <interceptor-stack 
@@ -26,11 +28,11 @@
 		</action>
 		<action name="upload" class="action.FileUploadAction" method="mypic">
 			<result name="upload_success" type="redirect">/admin/myprofile.jsp</result>
-
+			<result name="input">/admin/myprofile.jsp</result>
 			<!-- 配置拦截器限制上床文件类型及大小 -->
 			<interceptor-ref name="fileUpload">
 				<param name="allowedTypes">image/jpeg</param>
-				<param name="maximumSize">1M</param>
+				<param name="maximumSize">163840</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>

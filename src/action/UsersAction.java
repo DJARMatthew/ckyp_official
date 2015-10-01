@@ -1,10 +1,10 @@
 package action;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
-
-
 import entity.Users;
 import service.UsersDAO;
 import service.impl.UsersDAOImpl;
@@ -16,17 +16,18 @@ public class UsersAction extends SupperAction implements ModelDriven<Users> {
 	 */
 	private static final long serialVersionUID = -5505628531551332998L;
 	private Users user = new Users();
-
+	Map<String,Object> session = ActionContext.getContext().getSession();
+	
 	// 用户登陆动作,登录方法
 	public String login() {
 		UsersDAO udao = new UsersDAOImpl();
-		String piccode = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		String piccode = (String) session.get(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 		String checkcode = request.getParameter("checkcode");
 		Users accountInfo = new Users();
 		accountInfo = udao.usersLogin(user);
 		if (checkcode.equals(piccode) && accountInfo != null) {
-			session.setAttribute("accountinfo", accountInfo);
-			session.setAttribute("status", "online");
+			session.put("accountinfo", accountInfo);
+			session.put("status", "online");
 			return "login_success";
 		} else {
 			return "login_failure";
@@ -38,9 +39,9 @@ public class UsersAction extends SupperAction implements ModelDriven<Users> {
 	public String logout() {
 
 		// 判断是否session中保存了用户名，有则释放,无则保持在本页
-		if (session.getAttribute("status") == "online") {
+		if (session.get("status") == "online") {
 
-			this.session.invalidate();
+			session.clear();
 		}
 
 		return "logout_success";
@@ -52,7 +53,7 @@ public class UsersAction extends SupperAction implements ModelDriven<Users> {
 	public void validate() {
 		
 		UsersDAO udao = new UsersDAOImpl();
-		String piccode =  (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		String piccode =  (String) session.get(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 		
 		String checkcode = request.getParameter("checkcode");
 		Users accountInfo = new Users();

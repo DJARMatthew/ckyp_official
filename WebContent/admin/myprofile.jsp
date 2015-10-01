@@ -97,6 +97,8 @@
 								<h3>我的资料</h3>
 							</div>
 							<div class="widget-content">
+								<div><s:fielderror></s:fielderror></div>
+								<div>${result}</div>
 								<form method="post" class="form-horizontal"
 									action="<%=request.getContextPath()%>/admin/upload.action"
 									enctype="multipart/form-data">
@@ -108,7 +110,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input required type="text" class="form-control"
+														<input  type="text" class="form-control"
 															id="person" value='${accountinfo.name }'>
 													</div>
 												</div>
@@ -140,7 +142,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input required type="date" class="form-control"
+														<input  type="date" class="form-control"
 															id="birthday" value="${accountinfo.birthday }"
 															placeholder="日期格式：YYYY-MM-DD">
 													</div>
@@ -152,7 +154,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input required type="text" class="form-control"
+														<input  type="text" class="form-control"
 															id="position" value="${accountinfo.position }">
 													</div>
 												</div>
@@ -163,7 +165,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input required type="text" class="form-control"
+														<input  type="text" class="form-control"
 															id="onboardT" placeholder="日期格式：YYYY-MM-DD"
 															value="${accountinfo.onboardT }">
 													</div>
@@ -207,7 +209,7 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-phone"></i></span> <input required type="text"
+																class="icon-phone"></i></span> <input  type="text"
 																class="form-control" name="phone" id="phone"
 																value="${accountinfo.phone }">
 														</div>
@@ -222,7 +224,7 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-envelope"></i></span> <input required type="email"
+																class="icon-envelope"></i></span> <input  type="email"
 																name="email" id="email" class="form-control"
 																value="${accountinfo.email }">
 														</div>
@@ -235,7 +237,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="text" required class="form-control"
+														<input type="text"  class="form-control"
 															name="qqnum" id="qqnum" value="${accountinfo.qq }">
 													</div>
 												</div>
@@ -248,7 +250,7 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-weibo"></i></span> <input type="text"
+																class="icon-weibo"></i></span> <input  type="text"
 																class="form-control" name="weibo_link" id="weibo_link"
 																${accountinfo.weibo }>
 														</div>
@@ -265,7 +267,7 @@
 													<div class="form-group text-center">
 														<div class="fileinput fileinput-new"
 															data-provides="fileinput">
-															<p class="alert alert-warning">尺寸（300*300），JPG</p>
+															<p class="alert alert-warning">尺寸300*300,格式JPG,大小160kb</p>
 															<div class="fileinput-new thumbnail"
 																style="width: 200px; height: 150px;">
 																<img src="images/user.jpg" />
@@ -292,7 +294,7 @@
 													<div class="form-group text-center">
 														<div class="fileinput fileinput-new"
 															data-provides="fileinput">
-															<p class="alert alert-warning">尺寸（300*300），JPG</p>
+															<p class="alert alert-warning">尺寸300*300,格式JPG,大小160kb</p>
 															<div class="fileinput-new thumbnail"
 																style="width: 200px; height: 150px;">
 																<img
