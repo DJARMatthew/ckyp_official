@@ -403,7 +403,7 @@
 				dataType : 'json',//返回值类型 一般设置为json
 				success : function(data, status) //服务器成功响应处理函数
 				{
-					alert(data.message);//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
+					alert(data.message+"\n \n 记得点击底部的修改按钮");//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
 
 					if (typeof (data.error) != 'undefined') {
 						if (data.error != '') {
