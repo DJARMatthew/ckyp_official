@@ -97,11 +97,15 @@
 								<h3>我的资料</h3>
 							</div>
 							<div class="widget-content">
-								<div><s:fielderror></s:fielderror></div>
+
 								<div>${result}</div>
 								<form method="post" class="form-horizontal"
-									action="<%=request.getContextPath()%>/admin/upload.action"
+									action="<%=path%>/admin/upload.action"
 									enctype="multipart/form-data">
+									<div>
+										<s:fielderror></s:fielderror>
+									</div>
+									<div>${result}</div>
 									<fieldset>
 										<div class="col-lg-6">
 											<div class="control-group">
@@ -110,8 +114,8 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input  type="text" class="form-control"
-															id="person" value='${accountinfo.name }'>
+														<input type="text" class="form-control" name="name"
+															value='${accountinfo.name }'>
 													</div>
 												</div>
 											</div>
@@ -125,11 +129,11 @@
 															title="${accountinfo.gender }">
 															<label data-toggle-passive-class="btn-default"
 																data-toggle-class="btn-primary" class="btn btn-info">
-																<input type="radio" value="male" name="gender">
+																<input type="radio" value="男" name="gender">
 																&nbsp; 男 &nbsp;
 															</label> <label data-toggle-passive-class="btn-default"
 																data-toggle-class="btn-primary" class="btn btn-danger">
-																<input type="radio" value="female" name="gender">
+																<input type="radio" value="女" name="gender">
 																&nbsp; 女 &nbsp;
 															</label>
 														</div>
@@ -142,9 +146,9 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input  type="date" class="form-control"
-															id="birthday" value="${accountinfo.birthday }"
-															placeholder="日期格式：YYYY-MM-DD">
+														<input type="date" class="form-control" name="birthday"
+															value="<s:date name="#session.accountinfo.birthday" format="yyyy-MM-dd"/>"
+															placeholder="日期格式：YYYY-MM-DD" />
 													</div>
 												</div>
 											</div>
@@ -154,8 +158,8 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input  type="text" class="form-control"
-															id="position" value="${accountinfo.position }">
+														<input type="text" class="form-control" name="position"
+															value="${accountinfo.position }">
 													</div>
 												</div>
 											</div>
@@ -165,9 +169,9 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input  type="text" class="form-control"
-															id="onboardT" placeholder="日期格式：YYYY-MM-DD"
-															value="${accountinfo.onboardT }">
+														<input type="text" class="form-control" name="onboardT"
+															placeholder="日期格式：YYYY-MM-DD"
+															value="<s:date name="#session.accountinfo.onboardT" format="yyyy-MM-dd"/>" />
 													</div>
 												</div>
 											</div>
@@ -195,7 +199,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-lock"></i></span> <input required type="text"
-																name="password" id="passowrd" class="form-control"
+																name="password" class="form-control"
 																value="${accountinfo.password }">
 														</div>
 													</div>
@@ -209,8 +213,8 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-phone"></i></span> <input  type="text"
-																class="form-control" name="phone" id="phone"
+																class="icon-phone"></i></span> <input type="text"
+																class="form-control" name="phone"
 																value="${accountinfo.phone }">
 														</div>
 													</div>
@@ -224,8 +228,8 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-envelope"></i></span> <input  type="email"
-																name="email" id="email" class="form-control"
+																class="icon-envelope"></i></span> <input type="email"
+																name="email" class="form-control"
 																value="${accountinfo.email }">
 														</div>
 													</div>
@@ -237,8 +241,8 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="text"  class="form-control"
-															name="qqnum" id="qqnum" value="${accountinfo.qq }">
+														<input type="text" class="form-control" name="qq"
+															id="qqnum" value="${accountinfo.qq }">
 													</div>
 												</div>
 											</div>
@@ -250,9 +254,9 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i
-																class="icon-weibo"></i></span> <input  type="text"
-																class="form-control" name="weibo_link" id="weibo_link"
-																${accountinfo.weibo }>
+																class="icon-weibo"></i></span> <input type="text"
+																class="form-control" name="weibo"
+																value=${accountinfo.weibo }>
 														</div>
 													</div>
 												</div>
@@ -270,7 +274,14 @@
 															<p class="alert alert-warning">尺寸300*300,格式JPG,大小160kb</p>
 															<div class="fileinput-new thumbnail"
 																style="width: 200px; height: 150px;">
-																<img src="images/user.jpg" />
+																<s:if
+																	test="%{#myinfo.photo !=null & #myinfo.photo !='' }">
+																	<img src="<%=basePath %>${accountinfo.photo}" />
+																</s:if>
+																<s:else>
+																	<img alt="photo"
+																		src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+																</s:else>
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail"
 																style="max-width: 200px; max-height: 150px;"></div>
@@ -278,9 +289,11 @@
 																<span class="btn btn-success btn-file"><span
 																	class="fileinput-new">选择图片</span><span
 																	class="fileinput-exists">更改</span><input type="file"
-																	name="upload"></span> <a href="#"
+																	name="file" id="photo"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
 																	data-dismiss="fileinput">取消</a>
+																	<a role="button" onclick="ajaxFileUpload('photo');"
+																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
 													</div>
@@ -297,8 +310,14 @@
 															<p class="alert alert-warning">尺寸300*300,格式JPG,大小160kb</p>
 															<div class="fileinput-new thumbnail"
 																style="width: 200px; height: 150px;">
-																<img
-																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+																<s:if
+																	test="%{#myinfo.weixin !=null & #myinfo.weixin !='' }">
+																	<img src="<%=basePath %>${accountinfo.weixin}" />
+																</s:if>
+																<s:else>
+																	<img alt="weixin"
+																		src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+																</s:else>
 															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail"
 																style="max-width: 200px; max-height: 150px;"></div>
@@ -306,9 +325,11 @@
 																<span class="btn btn-success btn-file"><span
 																	class="fileinput-new">选择图片</span><span
 																	class="fileinput-exists">更改</span><input type="file"
-																	name="upload"></span> <a href="#"
+																	name="file" id="weixin"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
 																	data-dismiss="fileinput">取消</a>
+																	<a role="button" onclick="ajaxFileUpload('weixin');"
+																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
 													</div>
@@ -324,8 +345,8 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-globe"></i></span> <input type="text"
-																class="form-control" name="myweb" id="myweb"
-																${accountinfo.mypage }>
+																class="form-control" name="mypage"
+																value=${accountinfo.mypage }>
 														</div>
 													</div>
 												</div>
@@ -335,7 +356,7 @@
 									<div class="form-actions text-center">
 										<div>
 											<button class="btn btn-success" type="submit">修改</button>
-											<button class="btn btn-warning" type="button">重置</button>
+											<button class="btn btn-warning" type="reset">重置</button>
 										</div>
 									</div>
 								</form>
@@ -349,29 +370,59 @@
 	<%@ include file="fragment/footer.jsp"%>
 
 	<script src="js/bootstrap-fileupload.js"></script>
+	<script src="js/ajaxfileupload.js"></script>
 	<script type="text/javascript">
-		jQuery(".footer")
-				.ready(
-						function() {
-							var gender = jQuery("#gender").attr("title");
-							if (gender == "男") {
-								jQuery("#gender").children("label:first-child")
-										.addClass("active");
-								jQuery("input[value='male']").attr("checked",
-										"true");
-							} else {
-								jQuery("#gender").children("label:last-child")
-										.addClass("active");
-								jQuery("input[value='female']").attr("checked",
-										"true");
-							}
-						})
+		jQuery(".footer").ready(
+				function() {
+					var gender = jQuery("#gender").attr("title");
+					if (gender == "男") {
+						jQuery("#gender").children("label:first-child")
+								.addClass("active");
+						jQuery("input[value='男']").attr("checked", "true");
+					} else {
+						jQuery("#gender").children("label:last-child")
+								.addClass("active");
+						jQuery("input[value='女']").attr("checked", "true");
+					}
+				})
 		jQuery("#gender").children("label").click(
 				function() {
 					jQuery("input[name='gender']").removeAttr("checked");
 					jQuery(this).children("input[name='gender']").attr(
 							"checked", true);
 				})
+	</script>
+	<script type="text/javascript">
+		function ajaxFileUpload(v,x) {
+
+		
+			jQuery.ajaxFileUpload({
+				url : "<%=path%>/admin/fileUploadAction.action?type="+v,    //用于文件上传的服务器端请求地址
+				secureuri : false,      //一般设置为false
+				fileElementId : v,    //文件上传空间的id属性  <input type="file" id="file" name="file" />
+				dataType : 'json',//返回值类型 一般设置为json
+				success : function(data, status) //服务器成功响应处理函数
+				{
+					alert(data.message);//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
+
+					if (typeof (data.error) != 'undefined') {
+						if (data.error != '') {
+							alert(data.error);
+						} else {
+							alert(data.message);
+						}
+					}
+					window.location.reload();
+				},
+				error : function(data, status, e)//服务器响应失败处理函数
+				{
+					alert(e);
+				}
+			})
+
+			return false;
+
+		}
 	</script>
 </body>
 </html>

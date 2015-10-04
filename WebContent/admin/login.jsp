@@ -49,7 +49,7 @@
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon"> <i class="icon-user"></i>
 								</span> <input required type="text" placeholder="您的帐号"
-									class="form-control input-lg" name="username" id="username">
+									class="form-control input-lg" name="username">
 							</div>
 						</div>
 
@@ -59,7 +59,7 @@
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon"> <i class="icon-lock"></i>
 								</span> <input required type="password" placeholder="您的密码"
-									class="form-control input-lg" id="password" name="password">
+									class="form-control input-lg" name="password">
 							</div>
 							<span style="color: rgb(255, 0, 0)">
 								<s:fielderror>
@@ -73,7 +73,7 @@
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon"><i class="icon-key"></i>
 								</span> <input required type="password" placeholder="点击此处显示验证码"
-									class="form-control input-lg" id="checkcode" name="checkcode"
+									class="form-control input-lg" name="checkcode" id="checkcode"
 									data-toggle="popover">
 							</div>
 							<span style="color: rgb(255, 0, 0)">

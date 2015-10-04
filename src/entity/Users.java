@@ -176,9 +176,4 @@ public class Users {
 		this.mypage = mypage;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Users [uid=" + uid + ", sname=" + sname + ", gender=" + gender + ", birthday=" + birthday
-//				+ ", address=" + address + "]";
-//	}
 }

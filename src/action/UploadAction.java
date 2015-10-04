@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
@@ -11,21 +12,16 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.Users;
 
-public class FileUploadAction extends ActionSupport {
-
+public class UploadAction extends ActionSupport {
 	/**
-	 * 此方法包括各种方式（覆盖源文件或不覆盖） & 各种用户类型的上传和下载
+	 * 
 	 */
-	private static final long serialVersionUID = 831531886763295848L;
-
-	// 建立实体属性
+	private static final long serialVersionUID = 4746811755252333192L;
 	private List<File> upload;
 	private List<String> uploadContentType;
 	private List<String> uploadFileName;
 	private String result;
-	private List<String> filePath;
 
-	// 实体的方法
 	public List<File> getUpload() {
 		return upload;
 	}
@@ -58,14 +54,6 @@ public class FileUploadAction extends ActionSupport {
 		this.result = result;
 	}
 
-	public List<String> getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(List<String> filePath) {
-		this.filePath = filePath;
-	}
-
 	Map<String, Object> session = ActionContext.getContext().getSession();
 
 	// 用户上传自己的头像、微信图片
@@ -73,28 +61,45 @@ public class FileUploadAction extends ActionSupport {
 		Users me = (Users) session.get("accountinfo");
 		String myrole = me.getRole();
 		String uid = String.valueOf(me.getUid());
-
 		String path = ServletActionContext.getServletContext().getRealPath("/account/" + myrole + uid + "/images/");
 		File file = new File(path);
 
 		if (!file.exists()) {
 			file.mkdir();
 		}
-		filePath = new ArrayList<String>();
+
+		uploadFileName = new ArrayList<String>();
 		// 循环将批量上传的文件保存到本地
-		for (int i = 0; i < upload.size(); i++) {
-			String temp = null;
 
-			temp = String.valueOf(java.util.UUID.randomUUID()) + "_.jpg";
+		try {
+			if (upload.isEmpty()) {
+				return "upload_success";
+			} else {
+				for (int i = 0; i < upload.size(); i++) {
+					String temp = null;
 
-			filePath.add(path + temp);
-			FileUtils.copyFile(upload.get(i), new File(file, temp));
-			
+					temp = String.valueOf(java.util.UUID.randomUUID()) + "_.jpg";
 
+					uploadFileName.add(path + temp);
+					FileUtils.copyFile(upload.get(i), new File(uploadFileName.get(i)));
+					System.out.println(upload.get(i) + "    " + uploadFileName.get(i));
+					if (upload.get(0).exists()) {
+						me.setPhoto("/account/" + myrole + uid + "/images/" + temp);
+					} 
+					if (upload.get(1).exists()){
+						me.setWeixin("/account/" + myrole + uid + "/images/" + temp);
+					}
+				}
+				result = "上传成功";
+				return "upload_success";
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "上传错误";
+			return "upload_success";
 		}
-		System.out.println(filePath);
-		result = "上传成功";
-		return "upload_success";
 
 	}
 

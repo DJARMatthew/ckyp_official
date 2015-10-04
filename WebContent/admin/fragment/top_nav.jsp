@@ -11,9 +11,10 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	SimpleDateFormat formater_hms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	SimpleDateFormat formater_ymd = new SimpleDateFormat("yyyy-MM-dd");
 	Date currentTime = new Date();
-	String dateString = formater.format(currentTime);
+	String dateString = formater_hms.format(currentTime);
 %>
 
 <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -88,8 +89,8 @@
 				</ul></li>
 			<li class="dropdown user  hidden-xs"><a data-toggle="dropdown"
 				class="dropdown-toggle" href="#"> <i class="icon-cog"></i> <span
-					class="username"> ${accountinfo.name }
-				</span> <i class="icon-caret-down small"></i>
+					class="username"> ${accountinfo.name } </span> <i
+					class="icon-caret-down small"></i>
 			</a>
 				<ul class="dropdown-menu">
 					<li><a href="myprofile.html"><i class="icon-user"></i>

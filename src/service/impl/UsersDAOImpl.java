@@ -38,13 +38,13 @@ public class UsersDAOImpl implements UsersDAO {
 			// 提交事务
 			tx.commit();
 			// 判断是否查到对应的记录
-			if (list.size() == 1 ){
+			if (list.size() == 1) {
 				Iterator its = list.iterator();
 				while (its.hasNext()) {
 					loginInfo = (Users) its.next();
 				}
 				return loginInfo;
-			}else{
+			} else {
 				return loginInfo;
 			}
 
@@ -65,43 +65,33 @@ public class UsersDAOImpl implements UsersDAO {
 
 		}
 	}
-	//查询所有用户
+
+	// 查询所有用户
 	@Override
 	public List<Users> queryAllUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	// 根据用户ID查询用户
 	@Override
-	public Users queryUsersByName(Users u) {
+	public Users queryUsersByUid(int uid) {
 		Transaction tx = null;
-		Users s = null;
-		String hql = "";
+		Users u = null;
 
 		try {
 
 			Session session = MyHibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			hql = "from Users where username=? ";
-			Query query = session.createQuery(hql);
-			query.setParameter(0, u.getUsername());
-			List list = query.list();
+			u = (Users) session.get(Users.class, uid);
 			tx.commit();
-			if (list != null &list.size() == 1 ){
-				Iterator its = list.iterator();
-				while (its.hasNext()) {
-					s = (Users) its.next();
-				}
-				return s;
-			}else{
-				return s;
-			}
-			
+			return u;
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
 			tx.commit();
-			return s;
+			return u;
 
 		} finally {
 			if (tx != null) {
@@ -115,34 +105,28 @@ public class UsersDAOImpl implements UsersDAO {
 	// 添加用户-数据库操作
 	@Override
 	public boolean addUsers(Users u) {
-		// TODO Auto-generated method stub
-//		u.setUid(getNewUid());
+		return false;
+	}
+
+	//更新用户
+	@Override
+	public boolean updateUsers(Users u) {
 		Transaction tx = null;
 		try {
 			Session session = MyHibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			session.save(u);
+			session.update(u);
 			tx.commit();
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			tx.commit();
 			return false;
-
 		} finally {
-
 			if (tx != null) {
 				tx = null;
 			}
-
 		}
-	}
-
-	@Override
-	public boolean updateUsers(Users u) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

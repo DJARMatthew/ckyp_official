@@ -30,8 +30,9 @@
 			</s:if>
 			<li><a href="#"> <i class="icon-edit"></i> 文章管理 <span
 					class="label label-info pull-right">
-					<s:if test="%{#myinfo.role == 'admin'}">3</s:if>
 					<s:if test="%{#myinfo.role !== 'admin'}">2</s:if>
+					<s:else>3</s:else>
+					
 					</span> <i
 					class="arrow icon-angle-left"></i></a>
 				<ul class="sub-menu">

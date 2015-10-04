@@ -7,34 +7,41 @@
 	<constant name="struts.custom.i18n.resources" value="app"></constant>
 	<constant name="struts.multipart.maxSize" value="10485760"></constant>
 	<package name="default" namespace="/" extends="struts-default">
-		<!-- <interceptors> <interceptor name="role" class="servlet.Status_role"></interceptor> 
-			<interceptor name="status" class="servlet.Status_log"></interceptor> <interceptor-stack 
-			name="mystack"> <interceptor-ref name="defaultStack"></interceptor-ref> <interceptor-ref 
-			name="role"> <param name="excludeMethods">Users_login,Users_logout</param> 
-			</interceptor-ref> </interceptor-stack> </interceptors> <default-interceptor-ref 
-			name="mystack"></default-interceptor-ref> <global-results> <result name="">/admin/login.jsp</result> 
-			</global-results> -->
+
 	</package>
 
 	<!-- Add packages here -->
-	<package name="users" namespace="/admin" extends="default">
-		<action name="authorityIn" class="action.UsersAction" method="login">
+	<package name="user" namespace="/admin" extends="default,json-default">
+		<action name="authorityIn" class="action.AuthorityAction" method="login">
 			<result name="login_success" type="redirect">/admin/index.jsp</result>
 			<result name="login_failure" type="redirect">/admin/login.jsp</result>
 			<result name="input">/admin/login.jsp</result>
 		</action>
-		<action name="authorityOut" class="action.UsersAction" method="logout">
+		<action name="authorityOut" class="action.AuthorityAction" method="logout">
 			<result name="logout_success" type="redirect">/admin/login.jsp</result>
 		</action>
-		<action name="upload" class="action.FileUploadAction" method="mypic">
-			<result name="upload_success" type="redirect">/admin/myprofile.jsp</result>
+		<action name="upload" class="action.UploadAction" method="mypic">
+			<result name="upload_success">/admin/myprofile.jsp</result>
 			<result name="input">/admin/myprofile.jsp</result>
 			<!-- 配置拦截器限制上床文件类型及大小 -->
 			<interceptor-ref name="fileUpload">
 				<param name="allowedTypes">image/jpeg</param>
+				<param name="maximumSize">1M</param>
 				<param name="maximumSize">163840</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="fileUploadAction" class="action.FileUpload">
+			<result type="json" name="success">
+                <param name="contentType">
+                    text/html
+                </param>
+            </result>
+            <result type="json" name="error">
+                <param name="contentType">
+                    text/html
+                </param>
+            </result>
 		</action>
 	</package>
 

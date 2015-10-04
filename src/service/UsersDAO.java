@@ -14,7 +14,7 @@ public interface UsersDAO {
 	public List<Users> queryAllUsers();
 
 	// 根据用户名字查询数据
-	public Users queryUsersByName(Users u);
+	public Users queryUsersByUid(int uid);
 
 	// 添加用户资料
 	public boolean addUsers(Users u);
@@ -24,4 +24,5 @@ public interface UsersDAO {
 
 	// 删除用户 资料
 	public boolean deleteUsers(String uid);
+
 }
