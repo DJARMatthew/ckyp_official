@@ -23,7 +23,7 @@
 							<div class="widget-header">
 								<i class="icon-user"></i>
 								<h3>
-									登录时间：<small><%= dateString %></small>
+									登录时间：<small><%=dateString%></small>
 								</h3>
 							</div>
 							<div class="widget-content">
@@ -33,16 +33,20 @@
 										<div class="row">
 											<div class="col-md-6">
 												<div class="text-align-center">
-													<img style="height: 136px" alt="64x64"
+													<s:if test="%{#myinfo.photo !=null & #myinfo.photo !='' }">
+														<img style="height:99px" class="img-circle" alt="photo" src="<%=basePath %>${accountinfo.photo}" />
+													</s:if>
+													<s:else>
+														<img style="height: 99px" alt="photo"
 														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" class="img-circle">
+													</s:else>
+													
 												</div>
 											</div>
 											<div class="col-md-6">
 												<h3 class="no-margin">${accountinfo.name}</h3>
 												<address>
-													<strong>
-														${accountinfo.position }
-													</strong><br>
+													<strong> ${accountinfo.position } </strong><br>
 												</address>
 											</div>
 										</div>

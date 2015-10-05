@@ -20,18 +20,7 @@
 		<action name="authorityOut" class="action.AuthorityAction" method="logout">
 			<result name="logout_success" type="redirect">/admin/login.jsp</result>
 		</action>
-		<action name="upload" class="action.UploadAction" method="mypic">
-			<result name="upload_success">/admin/myprofile.jsp</result>
-			<result name="input">/admin/myprofile.jsp</result>
-			<!-- 配置拦截器限制上床文件类型及大小 -->
-			<interceptor-ref name="fileUpload">
-				<param name="allowedTypes">image/jpeg</param>
-				<param name="maximumSize">1M</param>
-				<param name="maximumSize">163840</param>
-			</interceptor-ref>
-			<interceptor-ref name="defaultStack"></interceptor-ref>
-		</action>
-		<action name="fileUploadAction" class="action.FileUpload">
+		<action name="fileUploadAction" class="action.FileUpload" method="mypic">
 			<result type="json" name="success">
                 <param name="contentType">
                     text/html
@@ -43,6 +32,13 @@
                 </param>
             </result>
 		</action>
+		<action name="*_*" class="action.{1}Action" method="{2}">
+			<result name="save_success" type="redirect">/admin/myprofile.jsp</result>
+			<result name="adduser_success" type="chain">Edit_queryalluser</result>
+			<result name="queryalluser_success" type="redirect" >/admin/member_mgt.jsp</result>
+			<result name="deleteuser_success" type="chain">Edit_queryalluser</result>
+		</action>
+		
 	</package>
 
 

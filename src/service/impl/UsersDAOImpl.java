@@ -69,8 +69,25 @@ public class UsersDAOImpl implements UsersDAO {
 	// 查询所有用户
 	@Override
 	public List<Users> queryAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		Transaction tx = null;
+		List<Users> list = null;
+		String hql = "";
+		try{
+			Session session = MyHibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			hql = "from Users";
+			Query query = session.createQuery(hql);
+			list = query.list();
+			tx.commit();
+			return list;
+		}catch (Exception e){
+			e.printStackTrace();
+			return list;
+		}finally {
+			if (tx != null){
+				tx = null;
+			}
+		}
 	}
 
 	// 根据用户ID查询用户
@@ -105,7 +122,22 @@ public class UsersDAOImpl implements UsersDAO {
 	// 添加用户-数据库操作
 	@Override
 	public boolean addUsers(Users u) {
-		return false;
+		Transaction tx = null;
+		try {
+			Session session = MyHibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			session.save(u);
+			tx.commit();
+			return true;
+		} catch (Exception e){
+			e.printStackTrace();
+			tx.commit();
+			return false;
+		} finally {
+			if (tx != null) {
+				tx = null;
+			}
+		}
 	}
 
 	//更新用户
@@ -130,9 +162,24 @@ public class UsersDAOImpl implements UsersDAO {
 	}
 
 	@Override
-	public boolean deleteUsers(String uid) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteUsers(int uid) {
+		Transaction tx = null;
+		try {
+			Session session = MyHibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Users u = (Users) session.get(Users.class, uid);
+			session.delete(u);
+			tx.commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			tx.commit();
+			return false;
+		}finally {
+			if (tx != null) {
+				tx = null;
+			}
+		}
 	}
 
 }

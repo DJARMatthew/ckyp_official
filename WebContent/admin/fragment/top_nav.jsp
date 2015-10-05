@@ -10,7 +10,7 @@
 	}
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+			+ path ;
 	SimpleDateFormat formater_hms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	SimpleDateFormat formater_ymd = new SimpleDateFormat("yyyy-MM-dd");
 	Date currentTime = new Date();

@@ -52,7 +52,7 @@
 				<li><a href="customer_mgt.html"> <i class="icon-table"></i>
 						客户管理
 				</a></li>
-				<li><a href="member_mgt.jsp"> <i class="icon-flag"></i>
+				<li><a href="<%=request.getContextPath() %>/admin/Edit_queryalluser.action"> <i class="icon-flag"></i>
 						伙伴管理
 				</a></li>
 			</s:if>

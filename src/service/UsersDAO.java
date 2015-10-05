@@ -13,7 +13,7 @@ public interface UsersDAO {
 
 	public List<Users> queryAllUsers();
 
-	// 根据用户名字查询数据
+	// 根据用户ID查询数据
 	public Users queryUsersByUid(int uid);
 
 	// 添加用户资料
@@ -23,6 +23,6 @@ public interface UsersDAO {
 	public boolean updateUsers(Users u);
 
 	// 删除用户 资料
-	public boolean deleteUsers(String uid);
+	public boolean deleteUsers(int uid);
 
 }

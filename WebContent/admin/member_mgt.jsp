@@ -8,6 +8,7 @@
 	media="screen">
 </head>
 <body>
+	<script type="text/javascript" src="js/Calendar3.js"></script>
 	<%@ include file="fragment/top_nav.jsp"%>
 	<div class="wrapper">
 		<%@ include file="fragment/left_nav.jsp"%>
@@ -51,83 +52,23 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary"
-													data-toggle="modal" data-target="#profilechange"><i
-														class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary"
-													data-toggle="modal" data-target="#profilechange"><i
-														class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary"
-													data-toggle="modal" data-target="#profilechange"><i
-														class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary"
-													data-toggle="modal" data-target="#profilechange"><i
-														class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary" data-toggle="modal"
-													data-target="#profilechange"><i class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
-											<tr>
-												<td class="hidden-xs"><img src="images/user.jpg"></td>
-												<td>丁志嘉</td>
-												<td class="hidden-xs">网站前端设计师</td>
-												<td class="hidden-xs">dzj_mgt_ceo@ckyp-data.com</td>
-												<td>15689525458</td>
-												<td><a class="btn btn-sm btn-primary"
-													data-toggle="modal" data-target="#profilechange"><i
-														class="icon-edit"></i></a>
-													<button class="btn btn-sm btn-danger delete">
-														<i class="icon-trash"></i>
-													</button></td>
-											</tr>
+											<s:iterator value="#session.userinfo" var="ulist">
+												<tr>
+													<td class="hidden-xs"><img
+														src="<%=basePath%><s:property value="#ulist.photo"/>"></td>
+													<td><s:property value="#ulist.name" /></td>
+													<td class="hidden-xs"><s:property
+															value="#ulist.position" /></td>
+													<td class="hidden-xs"><s:property value="#ulist.email" /></td>
+													<td><s:property value="#ulist.phone" /></td>
+													<td><a class="btn btn-sm btn-primary"
+														data-toggle="modal" data-target="#profilechange"><i
+															class="icon-edit"></i></a>
+														<a role="button" href="<%=path %>/admin/Edit_userdelete.action?uid=<s:property value="#ulist.uid"/>" class="btn btn-sm btn-danger delete">
+															<i class="icon-trash"></i>
+														</a></td>
+												</tr>
+											</s:iterator>
 										</tbody>
 									</table>
 									<div class="clearfix">
@@ -152,7 +93,9 @@
 								<h3>添加小伙伴</h3>
 							</div>
 							<div class="widget-content">
-								<form method="post" class="form-horizontal">
+								<form method="post" class="form-horizontal"
+									action="<%=path%>/admin/Edit_adduser.action"
+									enctype="multipart/form-data">
 									<fieldset>
 										<div class="col-lg-6">
 											<div class="control-group">
@@ -161,7 +104,8 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="text" class="form-control" id="person">
+														<input type="text" class="form-control" name="name"
+															required>
 													</div>
 												</div>
 											</div>
@@ -173,12 +117,14 @@
 													<div class="form-group">
 														<div data-toggle="buttons" class="btn-group" id="gender">
 															<label data-toggle-passive-class="btn-default"
+																onclick="sexselector('男')"
 																data-toggle-class="btn-primary"
 																class="btn btn-info active"> <input type="radio"
-																value="male" name="gender"> &nbsp; 男 &nbsp;
+																value="男" checked name="gender"> &nbsp; 男 &nbsp;
 															</label> <label data-toggle-passive-class="btn-default"
+																onclick="sexselector('女')"
 																data-toggle-class="btn-primary" class="btn btn-danger">
-																<input type="radio" value="female" name="gender">
+																<input type="radio" value="女" name="gender">
 																&nbsp; 女 &nbsp;
 															</label>
 														</div>
@@ -191,8 +137,9 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="date" class="form-control" id="birthday"
-															placeholder="日期格式YYYY-MM-DD">
+														<input type="date" class="form-control" name="birthday"
+															onclick="new Calendar(1920,2016).show(this);" id="control_date1"
+															size="20" maxlength="10" readonly="readonly" required>
 													</div>
 												</div>
 											</div>
@@ -202,7 +149,8 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="text" class="form-control" id="position">
+														<input type="text" class="form-control" name="position"
+															required>
 													</div>
 												</div>
 											</div>
@@ -212,8 +160,9 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="date" class="form-control" id="onboardT"
-															placeholder="日期格式YYYY-MM-DD">
+														<input type="date" class="form-control" name="onboardT"
+															onclick="new Calendar(1920,2016).show(this);" id="control_date2"
+															size="20" maxlength="10" readonly="readonly" required>
 													</div>
 												</div>
 											</div>
@@ -226,7 +175,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-user"></i></span> <input type="text"
-																class="form-control" name="username" id="username">
+																class="form-control" name="username" required>
 														</div>
 													</div>
 												</div>
@@ -240,7 +189,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-lock"></i></span> <input type="text"
-																name="password" id="passowrd" class="form-control">
+																name="password" class="form-control" required>
 														</div>
 													</div>
 												</div>
@@ -254,7 +203,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-phone"></i></span> <input type="text"
-																class="form-control" name="phone" id="phone">
+																class="form-control" name="phone">
 														</div>
 													</div>
 												</div>
@@ -268,7 +217,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-envelope"></i></span> <input type="text"
-																name="email" id="email" class="form-control">
+																name="email" class="form-control">
 														</div>
 													</div>
 												</div>
@@ -279,7 +228,7 @@
 												</div>
 												<div class="col-md-9">
 													<div class="form-group">
-														<input type="text" class="form-control" name="qqnum"
+														<input type="text" class="form-control" name="qq"
 															id="qqnum">
 													</div>
 												</div>
@@ -293,7 +242,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-weibo"></i></span> <input type="text"
-																class="form-control" name="weibo_link" id="weibo_link">
+																class="form-control" name="weibo">
 														</div>
 													</div>
 												</div>
@@ -310,18 +259,21 @@
 															data-provides="fileinput">
 															<p class="alert alert-warning">尺寸（300*300），JPG</p>
 															<div class="fileinput-new thumbnail"
-																style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image"/></div>
+																style="width: 200px; height: 150px;">
+																<img
+																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail"
 																style="max-width: 200px; max-height: 150px;"></div>
 															<div>
 																<span class="btn btn-success btn-file"><span
 																	class="fileinput-new">选择图片</span><span
 																	class="fileinput-exists">更改</span><input type="file"
-																	name="..."></span> <a href="#"
+																	name="file" id="photo"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
 																	data-dismiss="fileinput">取消</a>
-																<button type="submit"
-																	class="btn btn-primary fileinput-exists">上传</button>
+																<a role="button" onclick="ajaxFileUpload('adduser','${nextuid}','photo');"
+																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
 													</div>
@@ -337,18 +289,21 @@
 															data-provides="fileinput">
 															<p class="alert alert-warning">尺寸（300*300），JPG</p>
 															<div class="fileinput-new thumbnail"
-																style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image"/></div>
+																style="width: 200px; height: 150px;">
+																<img
+																	src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+															</div>
 															<div class="fileinput-preview fileinput-exists thumbnail"
 																style="max-width: 200px; max-height: 150px;"></div>
 															<div>
 																<span class="btn btn-success btn-file"><span
 																	class="fileinput-new">选择图片</span><span
 																	class="fileinput-exists">更改</span><input type="file"
-																	name="..."></span> <a href="#"
+																	name="file" id="weixin"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
 																	data-dismiss="fileinput">取消</a>
-																<button type="submit"
-																	class="btn btn-primary fileinput-exists">上传</button>
+																<a role="button" onclick="ajaxFileUpload('adduser','${nextuid}','weixin');"
+																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
 													</div>
@@ -363,7 +318,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-globe"></i></span> <input type="text"
-																class="form-control" name="myweb" id="myweb">
+																class="form-control" name="mypage">
 														</div>
 													</div>
 												</div>
@@ -390,7 +345,7 @@
 		class="modal fade" id="profilechange">
 		<div class="modal-dialog" style="width: 80%;">
 			<div class="modal-content"
-				style="background-size: cover; background-image: url(images/b.jpg); color: #ffffff;">
+				style="background-size: cover; background-image: url(images/a.jpg); color: #ffffff;">
 				<div class="modal-header" style="border-bottom: none;">
 					<button aria-hidden="true" data-dismiss="modal" class="close"
 						type="button">×</button>
@@ -415,7 +370,8 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<input type="text" class="form-control" id="person">
+													<input type="text" class="form-control" name="name"
+														required>
 												</div>
 											</div>
 										</div>
@@ -425,15 +381,15 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<div data-toggle="buttons" class="btn-group" id="gender">
+													<div data-toggle="buttons" class="btn-group" id="gendermodal">
 														<label data-toggle-passive-class="btn-default"
-															data-toggle-class="btn-primary"
+															data-toggle-class="btn-primary" onclick="sexselector1('男')"
 															class="btn btn-info active"> <input type="radio"
-															value="male" name="gender"> &nbsp; 男 &nbsp;
+															value="男" name="gender" checked> &nbsp; 男 &nbsp;
 														</label> <label data-toggle-passive-class="btn-default"
-															data-toggle-class="btn-primary" class="btn btn-danger">
-															<input type="radio" value="female" name="gender">
-															&nbsp; 女 &nbsp;
+															onclick="sexselector1('女')" data-toggle-class="btn-primary"
+															class="btn btn-danger"> <input type="radio"
+															value="女" name="gender"> &nbsp; 女 &nbsp;
 														</label>
 													</div>
 												</div>
@@ -445,7 +401,9 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<input type="date" class="form-control" id="birthday">
+													<input type="date" class="form-control" name="birthday"
+														onclick="new Calendar(1920,2016).show(this);" id="control_date3"
+														size="20" maxlength="10" readonly="readonly" required>
 												</div>
 											</div>
 										</div>
@@ -455,7 +413,8 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<input type="text" class="form-control" id="position">
+													<input type="text" class="form-control" name="position"
+														required>
 												</div>
 											</div>
 										</div>
@@ -465,7 +424,9 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<input type="text" class="form-control" id="onboardT">
+													<input type="text" class="form-control" name="onboardT"
+														onclick="new Calendar(1920,2016).show(this);" id="control_date4"
+														size="20" maxlength="10" readonly="readonly" required>
 												</div>
 											</div>
 										</div>
@@ -478,7 +439,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-user"></i></span> <input type="text"
-															class="form-control" name="username" id="username">
+															class="form-control" name="username" required>
 													</div>
 												</div>
 											</div>
@@ -492,7 +453,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-lock"></i></span> <input type="text" name="password"
-															id="passowrd" class="form-control">
+															class="form-control" required>
 													</div>
 												</div>
 											</div>
@@ -506,7 +467,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-phone"></i></span> <input type="text"
-															class="form-control" name="phone" id="phone">
+															class="form-control" name="phone">
 													</div>
 												</div>
 											</div>
@@ -520,7 +481,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-envelope"></i></span> <input type="text"
-															name="email" id="email" class="form-control">
+															name="email" class="form-control">
 													</div>
 												</div>
 											</div>
@@ -531,7 +492,7 @@
 											</div>
 											<div class="col-md-9">
 												<div class="form-group">
-													<input type="text" class="form-control" name="qqnum"
+													<input type="text" class="form-control" name="qq"
 														id="qqnum">
 												</div>
 											</div>
@@ -545,7 +506,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-weibo"></i></span> <input type="text"
-															class="form-control" name="weibo_link" id="weibo_link">
+															class="form-control" name="weibo" id="weibo">
 													</div>
 												</div>
 											</div>
@@ -561,16 +522,19 @@
 													<div class="fileinput fileinput-new"
 														data-provides="fileinput">
 														<p class="alert alert-warning">尺寸（300*300），JPG</p>
-														
+
 														<div class="fileinput-new thumbnail"
-															style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image"/></div>
+															style="width: 200px; height: 150px;">
+															<img
+																src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+														</div>
 														<div class="fileinput-preview fileinput-exists thumbnail"
 															style="max-width: 200px; max-height: 150px;"></div>
 														<div>
 															<span class="btn btn-success btn-file"><span
 																class="fileinput-new">选择图片</span><span
 																class="fileinput-exists">更改</span><input type="file"
-																name="..."></span> <a href="#"
+																name="file" id="editphoto"></span> <a href="#"
 																class="btn btn-danger fileinput-exists"
 																data-dismiss="fileinput">取消</a>
 															<button type="submit"
@@ -590,14 +554,17 @@
 														data-provides="fileinput">
 														<p class="alert alert-warning">尺寸（300*300），JPG</p>
 														<div class="fileinput-new thumbnail"
-															style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image"/></div>
+															style="width: 200px; height: 150px;">
+															<img
+																src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+														</div>
 														<div class="fileinput-preview fileinput-exists thumbnail"
 															style="max-width: 200px; max-height: 150px;"></div>
 														<div>
 															<span class="btn btn-success btn-file"><span
 																class="fileinput-new">选择图片</span><span
 																class="fileinput-exists">更改</span><input type="file"
-																name="..."></span> <a href="#"
+																name="file" id="editweixin"></span> <a href="#"
 																class="btn btn-danger fileinput-exists"
 																data-dismiss="fileinput">取消</a>
 															<button type="submit"
@@ -617,7 +584,7 @@
 													<div class="input-group">
 														<span class="input-group-addon"><i
 															class="icon-globe"></i></span> <input type="text"
-															class="form-control" name="myweb" id="myweb">
+															class="form-control" name="mypage">
 													</div>
 												</div>
 											</div>
@@ -639,43 +606,54 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
-	<!--delte alert-->
-	<div style="display: none" aria-hidden="true"
-		aria-labelledby="myModalLabel" role="dialog" tabindex="-2"
-		id="delete_alert" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content"
-				style="background-size: cover; background-image: url(images/c.jpg); color: #ffffff;">
-				<div class="modal-header" style="border-bottom: none;">
-					<button aria-hidden="true" data-dismiss="modal" class="close"
-						type="button">x</button>
-				</div>
-				<div class="modal-body text-center">
-					<h1 class="text-danger">
-						<strong class="icon-warning-sign"></strong> 注意！
-					</h1>
-					<p class="text-danger">是否删除此条记录？</p>
-				</div>
-				<div class="modal-footer text-center" style="border-top: none;">
-					<button type="button" class="btn btn-danger" id="confirm">
-						确认删除</button>
-					<button type="button" class="btn btn-warning" data-dismiss="modal">
-						取消删除</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	<%@ include file="fragment/footer.jsp"%>
 	<script src="js/bootstrap-fileupload.js"></script>
-	<script type="text/javascript" language="javascript">
-		jQuery('.delete').click(function() {
-			derow = jQuery(this).parents('tr');
-			jQuery('#delete_alert').modal('show');
-			jQuery('#confirm').click(function() {
-				derow.remove();
-				jQuery('#delete_alert').modal('hide');
-			});
-		});
+	<script src="js/ajaxfileupload.js"></script>
+	<script type="text/javascript">
+		function sexselector(v) {
+			_this = jQuery("#gender").children("label")
+			jQuery("#gender").find("input[name='gender']").removeAttr("checked");
+			jQuery(_this).children("input[value=" + v + "]").attr("checked",
+					true);
+		}
+		function sexselector1(s) {
+			_this = jQuery("#gendermodal").children("label")
+			jQuery("#gendermodal").find("input[name='gender']").removeAttr("checked");
+			jQuery(_this).children("input[value=" + s + "]").attr("checked",
+					true);
+		}
+	</script>
+	<script type="text/javascript">
+	function ajaxFileUpload(v,t,x) {
+
+		
+		jQuery.ajaxFileUpload({
+			url : "<%=path%>/admin/fileUploadAction.action?uploadtype="+v+"&useruid="+t+"&type="+x, //用于文件上传的服务器端请求地址
+			secureuri : false, //一般设置为false
+			fileElementId : x, //文件上传空间的id属性  <input type="file" id="file" name="file" />
+			dataType : 'json',//返回值类型 一般设置为json
+			success : function(data, status) //服务器成功响应处理函数
+			{
+				alert(data.message + "\n \n 记得点击底部的修改按钮");//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
+
+				if (typeof (data.error) != 'undefined') {
+					if (data.error != '') {
+						alert(data.error);
+					} else {
+						alert(data.message);
+					}
+				}
+				
+			},
+			error : function(data, status, e)//服务器响应失败处理函数
+			{
+				alert(e);
+			}
+		})
+
+		return false;
+
+	}
 	</script>
 </body>
 </html>

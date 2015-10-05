@@ -9,6 +9,7 @@
 	media="screen">
 </head>
 <body>
+	<script type="text/javascript" src="js/Calendar3.js"></script>
 	<%@ include file="fragment/top_nav.jsp"%>
 	<div class="wrapper">
 		<%@ include file="fragment/left_nav.jsp"%>
@@ -100,12 +101,8 @@
 
 								<div>${result}</div>
 								<form method="post" class="form-horizontal"
-									action="<%=path%>/admin/upload.action"
+									action="<%=path%>/admin/Edit_profile.action"
 									enctype="multipart/form-data">
-									<div>
-										<s:fielderror></s:fielderror>
-									</div>
-									<div>${result}</div>
 									<fieldset>
 										<div class="col-lg-6">
 											<div class="control-group">
@@ -115,7 +112,7 @@
 												<div class="col-md-9">
 													<div class="form-group">
 														<input type="text" class="form-control" name="name"
-															value='${accountinfo.name }'>
+															value='${accountinfo.name }' required>
 													</div>
 												</div>
 											</div>
@@ -129,7 +126,7 @@
 															title="${accountinfo.gender }">
 															<label data-toggle-passive-class="btn-default"
 																data-toggle-class="btn-primary" class="btn btn-info">
-																<input type="radio" value="男" name="gender">
+																<input type="radio" value="男" name="gender" checked>
 																&nbsp; 男 &nbsp;
 															</label> <label data-toggle-passive-class="btn-default"
 																data-toggle-class="btn-primary" class="btn btn-danger">
@@ -147,8 +144,10 @@
 												<div class="col-md-9">
 													<div class="form-group">
 														<input type="date" class="form-control" name="birthday"
+															onclick="new Calendar(1920,2016).show(this);" id="control_date1"
+															size="20" maxlength="10" readonly="readonly"
 															value="<s:date name="#session.accountinfo.birthday" format="yyyy-MM-dd"/>"
-															placeholder="日期格式：YYYY-MM-DD" />
+															required />
 													</div>
 												</div>
 											</div>
@@ -159,7 +158,7 @@
 												<div class="col-md-9">
 													<div class="form-group">
 														<input type="text" class="form-control" name="position"
-															value="${accountinfo.position }">
+															value="${accountinfo.position }" required>
 													</div>
 												</div>
 											</div>
@@ -170,7 +169,9 @@
 												<div class="col-md-9">
 													<div class="form-group">
 														<input type="text" class="form-control" name="onboardT"
-															placeholder="日期格式：YYYY-MM-DD"
+															required onclick="new Calendar(1920,2016).show(this);"
+															id="control_date1" size="20" maxlength="10"
+															readonly="readonly"
 															value="<s:date name="#session.accountinfo.onboardT" format="yyyy-MM-dd"/>" />
 													</div>
 												</div>
@@ -184,7 +185,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i
 																class="icon-user"></i></span> <input required type="text"
-																class="form-control" name="username" id="username"
+																class="form-control" name="username" required
 																value="${accountinfo.username }">
 														</div>
 													</div>
@@ -242,7 +243,7 @@
 												<div class="col-md-9">
 													<div class="form-group">
 														<input type="text" class="form-control" name="qq"
-															id="qqnum" value="${accountinfo.qq }">
+															value="${accountinfo.qq }">
 													</div>
 												</div>
 											</div>
@@ -291,8 +292,8 @@
 																	class="fileinput-exists">更改</span><input type="file"
 																	name="file" id="photo"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
-																	data-dismiss="fileinput">取消</a>
-																	<a role="button" onclick="ajaxFileUpload('photo');"
+																	data-dismiss="fileinput">取消</a> <a role="button"
+																	onclick="ajaxFileUpload('profile','photo');"
 																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
@@ -327,8 +328,8 @@
 																	class="fileinput-exists">更改</span><input type="file"
 																	name="file" id="weixin"></span> <a href="#"
 																	class="btn btn-danger fileinput-exists"
-																	data-dismiss="fileinput">取消</a>
-																	<a role="button" onclick="ajaxFileUpload('weixin');"
+																	data-dismiss="fileinput">取消</a> <a role="button"
+																	onclick="ajaxFileUpload('profile','weixin');"
 																	class="btn btn-primary fileinput-exists">上传</a>
 															</div>
 														</div>
@@ -397,13 +398,13 @@
 
 		
 			jQuery.ajaxFileUpload({
-				url : "<%=path%>/admin/fileUploadAction.action?type="+v,    //用于文件上传的服务器端请求地址
-				secureuri : false,      //一般设置为false
-				fileElementId : v,    //文件上传空间的id属性  <input type="file" id="file" name="file" />
+				url : "<%=path%>/admin/fileUploadAction.action?uploadtype=" + v+"&useruid=${accountinfo.uid}&type=" + x, //用于文件上传的服务器端请求地址
+				secureuri : false, //一般设置为false
+				fileElementId : x, //文件上传空间的id属性  <input type="file" id="file" name="file" />
 				dataType : 'json',//返回值类型 一般设置为json
 				success : function(data, status) //服务器成功响应处理函数
 				{
-					alert(data.message+"\n \n 记得点击底部的修改按钮");//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
+					alert(data.message + "\n \n 记得点击底部的修改按钮");//从服务器返回的json中取出message中的数据,其中message为在struts2中action中定义的成员变量
 
 					if (typeof (data.error) != 'undefined') {
 						if (data.error != '') {
